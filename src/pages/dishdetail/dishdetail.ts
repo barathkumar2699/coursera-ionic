@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ActionSheetController, ModalController } from 'ionic-angular';
 import { Dish } from '../../shared/dish';
 import { Comment } from '../../shared/comment';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
+import {CommentPage } from '../comment/comment';
+
 
 /**
  * Generated class for the DishdetailPage page.
@@ -25,7 +27,10 @@ export class DishdetailPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     @Inject('BaseURL') private BaseURL,
     private favoriteservice: FavoriteProvider,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController ,
+    private actionSheetCtrl: ActionSheetController,
+    private modalCtrl:ModalController) {
+
     this.dish = navParams.get('dish');
     this.favorite = favoriteservice.isFavorite(this.dish.id);
     this.numcomments = this.dish.comments.length;
@@ -34,6 +39,45 @@ export class DishdetailPage {
     this.avgstars = (total/this.numcomments).toFixed(2);
   }
 
+  presentActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Select Actions',
+      buttons: [
+        {
+          text: 'Add To Favorites',
+          handler: () => {
+            this.addToFavorites();
+          }
+        },
+        {
+          text: 'Add Comment',
+          handler: () => {
+            console.log('Add Comment clicked');
+            this.openCommentModal();
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    }); 
+    actionSheet.present();
+  }
+
+  openCommentModal() {
+    let modal = this.modalCtrl.create(CommentPage);
+    modal.onDidDismiss(comment => {
+      console.log(comment);
+      if (comment) {
+        this.dish.comments.push(comment);
+      }
+    });
+    modal.present();
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad DishdetailPage');
   }
