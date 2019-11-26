@@ -30,6 +30,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Camera } from '@ionic-native/camera';
 import { Network } from '@ionic-native/network';
+import { CallNumber } from '@ionic-native/call-number';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { Network } from '@ionic-native/network';
     LocalNotifications,
     SocialSharing,
     Camera,
-    Network
+    Network,
+    CallNumber
   ]
 })
 export class AppModule {}
