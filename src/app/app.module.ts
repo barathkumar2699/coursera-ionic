@@ -29,6 +29,7 @@ import { EmailComposer } from '@ionic-native/email-composer';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Camera } from '@ionic-native/camera';
+import { Network } from '@ionic-native/network';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { Camera } from '@ionic-native/camera';
     EmailComposer,
     LocalNotifications,
     SocialSharing,
-    Camera
+    Camera,
+    Network
   ]
 })
 export class AppModule {}
